@@ -6,14 +6,8 @@ public class DecartTest {
 
     @Test
     public void toQuaternion() {
-        Decart first = new Decart();
-        first.alpha = Math.PI;
-        first.x = 0.0;
-        first.y = 10.0;
-        first.z = 15.0;
-        Assert.assertEquals(0.0, first.toQuaternion().s, 1e-10);
-        Assert.assertEquals(0.0, first.toQuaternion().i, 1e-10);
-        Assert.assertEquals(0.8320502943378437, first.toQuaternion().k, 1e-10);
-        Assert.assertEquals(0.5547001962252291, first.toQuaternion().j, 1e-10);
+        Decart first = new Decart(Math.PI, 0, 10, 15);
+        Quaternion second = new Quaternion(6.123233995736766E-17, 0, 0.5547001962252291, 0.8320502943378437);
+        Assert.assertEquals(second, first.toQuaternion());
     }
-    }
+}
