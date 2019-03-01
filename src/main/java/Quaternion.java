@@ -1,9 +1,9 @@
 
 public class Quaternion {
-    double s;
-    double i;
-    double j;
-    double k;
+    private double s;
+    private double i;
+    private double j;
+    private double k;
 
     Quaternion(double s, double i, double j, double k) {
         this.s = s;
@@ -85,5 +85,21 @@ public class Quaternion {
             return s == other.s && i == other.i && j == other.j && k == other.k;
         }
         return false;
+    }
+
+    Double getS() {
+        return s;
+    }
+
+    Double getI() {
+        return i;
+    }
+
+    Double getJ() {
+        return j;
+    }
+
+    Double getK() {
+        return k;
     }
 }

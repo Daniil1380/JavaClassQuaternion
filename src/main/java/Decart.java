@@ -1,10 +1,10 @@
 
 //Для перевода в Декартову систему
 public class Decart {
-    double alpha;
-    double x;
-    double y;
-    double z;
+    private double alpha;
+    private double x;
+    private double y;
+    private double z;
 
     Decart(double alpha, double x, double y, double z) {
         this.alpha = alpha;
@@ -27,6 +27,22 @@ public class Decart {
             return alpha == other.alpha && x == other.x && y == other.y && y == other.y;
         }
         return false;
+    }
+
+    Double getAlpha() {
+        return alpha;
+    }
+
+    Double getX() {
+        return x;
+    }
+
+    Double getY() {
+        return y;
+    }
+
+    Double getZ() {
+        return z;
     }
 
 
