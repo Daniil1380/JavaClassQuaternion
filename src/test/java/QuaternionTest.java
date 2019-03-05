@@ -10,7 +10,7 @@ public class QuaternionTest {
     public void scalarMulti() {
         Quaternion first = new Quaternion(10, -5, 0, 15);
         Quaternion second = new Quaternion(30, -15, 0, 45);
-        Assert.assertEquals(second, first.scalarMulti(3));
+        Assert.assertTrue(first.scalarMulti(3).equalsRound(second, 1));
     }
 
     @org.junit.Test
@@ -18,7 +18,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(10, -5, 0, 15);
         Quaternion second = new Quaternion(-30, -15, 0, 45);
         Quaternion third = new Quaternion(-20, -20, 0, 60);
-        Assert.assertEquals(third, first.plus(second));
+        Assert.assertTrue(first.plus(second).equalsRound(third, 1));
 
     }
 
@@ -27,7 +27,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(10, -5, 0, 15);
         Quaternion second = new Quaternion(-30, -15, 0, 45);
         Quaternion third = new Quaternion(40, 10, 0, -30);
-        Assert.assertEquals(third, first.minus(second));
+        Assert.assertTrue(first.minus(second).equalsRound(third, 1));
     }
 
     @org.junit.Test
@@ -64,11 +64,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(10, -5, 0, 15);
         Quaternion second = new Quaternion(30, -15, 0, 45);
         Quaternion third = new Quaternion(-450, -300, 0, 900);
-        Assert.assertEquals(third, first.multi(second));
-        first = new Quaternion(0, 0, 0, 0);
-        second = new Quaternion(0, 0, 0, 0);
-        third = new Quaternion(0, 0, 0, 0);
-        Assert.assertEquals(third, first.multi(second));
+        Assert.assertTrue(first.multi(second).equalsRound(third, 1));
 
     }
 
@@ -77,7 +73,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(10, -5, 0, 15);
         Quaternion second = new Quaternion(30, -15, 0, 45);
         Quaternion third = new Quaternion(1 / 3.0, 0.0, 0.0, 0.0);
-        Assert.assertEquals(third, first.division(second));
+        Assert.assertTrue(first.division(second).equalsRound(third, 1));
 
     }
 
@@ -85,7 +81,7 @@ public class QuaternionTest {
     public void normal() {
         Quaternion first = new Quaternion(10, 5, 0, 15);
         Quaternion second = new Quaternion(10, 5, 0, 15).scalarMulti(1 / first.mod());
-        Assert.assertEquals(second, first.normal());
+        Assert.assertTrue(first.normal().equalsRound(second, 1));
     }
 
     @Test
@@ -93,7 +89,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0);
         Quaternion third = new Quaternion(0, 0, 0, 0);
-        Assert.assertEquals(third, first.multi(second));
+        Assert.assertTrue(first.multi(second).equalsRound(third, 1));
     }
 
     @Test(expected = NumberFormatException.class)
@@ -101,7 +97,7 @@ public class QuaternionTest {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0);
         Quaternion third = new Quaternion(0, 0, 0, 0);
-        Assert.assertEquals(third, first.division(second));
+        Assert.assertTrue(first.division(second).equalsRound(third, 1));
 
     }
 
@@ -109,7 +105,7 @@ public class QuaternionTest {
     public void normalException() {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0).scalarMulti(1 / first.mod());
-        Assert.assertEquals(second, first.normal());
+        Assert.assertTrue(first.normal().equalsRound(second, 1));
     }
 
     @Test(expected = NumberFormatException.class)
@@ -128,14 +124,14 @@ public class QuaternionTest {
     public void getAxis() {
         Quaternion first = new Quaternion(0, 1, 0, -1);
         Vector second  = new Vector(Math.PI / 2, 0, Math.PI / -2);
-        Assert.assertEquals(second, first.getAxis());
+        Assert.assertTrue(first.getAxis().equalsRound(second, 1));
     }
 
     @Test
     public void fromAngleAndAxis() {
         Vector first = new Vector(Math.PI / 2, 0, 0);
         Quaternion second = new Quaternion(1, 0, 0, 0);
-        Assert.assertEquals(second, Quaternion.fromAngleAndAxis(0.0 / 2, first));
+        Assert.assertTrue(Quaternion.fromAngleAndAxis(0.0 / 2, first).equalsRound(second, 1));
 
     }
 
@@ -143,7 +139,8 @@ public class QuaternionTest {
     public void fromAngleAndAxisException() {
         Vector first = new Vector(0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0);
-        Assert.assertEquals(second, Quaternion.fromAngleAndAxis(0.0 / 2, first));
+        Assert.assertTrue(Quaternion.fromAngleAndAxis(0.0 / 2, first).equalsRound(second, 1));
 
     }
+
 }

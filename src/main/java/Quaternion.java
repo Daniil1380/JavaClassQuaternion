@@ -71,14 +71,24 @@ public class Quaternion {
         return new Quaternion(s, i, j, k).scalarMulti(1 / this.mod());
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj instanceof Quaternion) {
             Quaternion other = (Quaternion) obj;
-            return Math.abs(s - other.s) <= Math.ulp(Math.max(s, other.s)) &&
-                    Math.abs(i - other.i) <= Math.ulp(Math.max(i, other.i)) &&
-                    Math.abs(j - other.j) <= Math.ulp(Math.max(j, other.j)) &&
-                    Math.abs(k - other.k) <= Math.ulp(Math.max(k, other.k));
+            return s == other.s && i == other.i && j == other.j && k == other.k;
+        }
+        return false;
+    }
+
+    public boolean equalsRound(Object obj, double n) {
+        if (this == obj) return true;
+        if (obj instanceof Quaternion) {
+            Quaternion other = (Quaternion) obj;
+            return Math.abs(s - other.s) <= n * Math.ulp(Math.max(s, other.s)) &&
+                    Math.abs(i - other.i) <= n * Math.ulp(Math.max(i, other.i)) &&
+                    Math.abs(j - other.j) <= n * Math.ulp(Math.max(j, other.j)) &&
+                    Math.abs(k - other.k) <= n * Math.ulp(Math.max(k, other.k));
         }
         return false;
     }
@@ -86,7 +96,6 @@ public class Quaternion {
     public double getS() {
         return s;
     }
-
 
     public double getI() {
         return i;
