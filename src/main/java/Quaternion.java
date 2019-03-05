@@ -57,7 +57,7 @@ public class Quaternion {
         return new Quaternion(newS, newI, newJ, newK);
     }
 
-    //Деление
+    //Делени
     public Quaternion division(Quaternion second) {
         double moduleInSqr = Math.pow(second.mod(), 2.0);
         if (moduleInSqr == 0) throw new NumberFormatException("Деление на ноль");
