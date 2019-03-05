@@ -14,42 +14,42 @@ public class Quaternion {
     }
 
     // Умножения на скаляр
-    Quaternion scalarMulti(double scalar) {
+    public Quaternion scalarMulti(double scalar) {
         return new Quaternion(s * scalar, i * scalar, j * scalar, k * scalar);
     }
 
     //Сложение
-    Quaternion plus(Quaternion n) {
+    public Quaternion plus(Quaternion n) {
         return new Quaternion(s + n.s, i + n.i, j + n.j, k + n.k);
     }
 
     //Вычитание
-    Quaternion minus(Quaternion n) {
+    public Quaternion minus(Quaternion n) {
         return new Quaternion(s - n.s, i - n.i, j - n.j, k - n.k);
     }
 
     //модуль
-    double mod() {
+    public double mod() {
         return Math.sqrt(Math.pow(s, 2.0) + Math.pow(i, 2.0) + Math.pow(k, 2.0) + Math.pow(j, 2.0));
     }
 
     //обращение
-    Quaternion inter() {
+    public Quaternion inter() {
         return  new Quaternion(s, i * -1, j * -1, k * -1);
     }
 
     //Векторная часть
-    Quaternion vector() {
+    public Quaternion vector() {
         return new Quaternion(0, i, j, k);
     }
 
     //Скалярная часть
-    Quaternion scalar() {
+    public Quaternion scalar() {
         return new Quaternion(s, 0, 0, 0);
     }
 
     //Умножение
-    Quaternion multi(Quaternion second) {
+    public Quaternion multi(Quaternion second) {
         double newS = (s * second.s - i * second.i - j * second.j - k * second.k);
         double newI = (s * second.i + second.s * i + j * second.k - k * second.j);
         double newJ = (s * second.j + j * second.s + k * second.i - i * second.k);
@@ -58,7 +58,7 @@ public class Quaternion {
     }
 
     //Деление
-    Quaternion division(Quaternion second) {
+    public Quaternion division(Quaternion second) {
         double moduleInSqr = Math.pow(second.mod(), 2.0);
         if (moduleInSqr == 0) throw new NumberFormatException("Деление на ноль");
         return this.multi(second.inter()).scalarMulti(1 / moduleInSqr);
@@ -66,7 +66,7 @@ public class Quaternion {
 
 
     //Нормализация
-    Quaternion normal() {
+    public Quaternion normal() {
         if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
         return new Quaternion(s, i, j, k).scalarMulti(1 / this.mod());
     }
@@ -83,20 +83,20 @@ public class Quaternion {
         return false;
     }
 
-    double getS() {
+    public double getS() {
         return s;
     }
 
 
-    double getI() {
+    public double getI() {
         return i;
     }
 
-    double getJ() {
+    public double getJ() {
         return j;
     }
 
-    double getK() {
+    public double getK() {
         return k;
     }
 
