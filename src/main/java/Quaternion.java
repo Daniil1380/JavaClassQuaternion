@@ -1,4 +1,5 @@
 
+
 public class Quaternion {
     private double s;
     private double i;
@@ -49,20 +50,19 @@ public class Quaternion {
 
     //Умножение
     Quaternion multi(Quaternion second) {
-        Quaternion answer = new Quaternion(0, 0, 0, 0);
-        answer.s = (s * second.s - i * second.i - j * second.j - k * second.k);
-        answer.i = (s * second.i + second.s * i + j * second.k - k * second.j);
-        answer.j = (s * second.j + j * second.s + k * second.i - i * second.k);
-        answer.k = (s * second.k + k * second.s + i * second.j - j * second.i);
-        return answer;
+        double newS = (s * second.s - i * second.i - j * second.j - k * second.k);
+        double newI = (s * second.i + second.s * i + j * second.k - k * second.j);
+        double newJ = (s * second.j + j * second.s + k * second.i - i * second.k);
+        double newK = (s * second.k + k * second.s + i * second.j - j * second.i);
+        return new Quaternion(newS, newI, newJ, newK);
     }
 
     //Деление
     Quaternion division(Quaternion second) {
         double moduleInSqr = Math.pow(second.mod(), 2.0);
         if (moduleInSqr == 0) throw new NumberFormatException("Деление на ноль");
-        return new Quaternion(s, i, j, k).multi(second.inter()).scalarMulti(1 / moduleInSqr);
-}
+        return this.multi(second.inter()).scalarMulti(1 / moduleInSqr);
+    }
 
 
     //Нормализация
@@ -71,35 +71,51 @@ public class Quaternion {
         return new Quaternion(s, i, j, k).scalarMulti(1 / this.mod());
     }
 
-    //Из Кватерниона в Декартову
-    Decart toDecart() {
-        Quaternion normalize = new Quaternion(s, i, j, k).scalarMulti(1 / this.mod());
-        return new Decart(2 * Math.acos(normalize.s), 2 * Math.asin(normalize.i),
-                2 * Math.asin(normalize.j), 2 * Math.asin(normalize.k));
-    }
-
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj instanceof Quaternion) {
             Quaternion other = (Quaternion) obj;
-            return s == other.s && i == other.i && j == other.j && k == other.k;
+            return Math.abs(s - other.s) <= Math.ulp(Math.max(s, other.s)) &&
+                    Math.abs(i - other.i) <= Math.ulp(Math.max(i, other.i)) &&
+                    Math.abs(j - other.j) <= Math.ulp(Math.max(j, other.j)) &&
+                    Math.abs(k - other.k) <= Math.ulp(Math.max(k, other.k));
         }
         return false;
     }
 
-    Double getS() {
+    double getS() {
         return s;
     }
 
-    Double getI() {
+
+    double getI() {
         return i;
     }
 
-    Double getJ() {
+    double getJ() {
         return j;
     }
 
-    Double getK() {
+    double getK() {
         return k;
+    }
+
+    public double getAngle() {
+        if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
+        Quaternion normalize = this.scalarMulti(1 / this.mod());
+        return 2 * Math.acos(normalize.s);
+    }
+    public Vector getAxis() {
+        if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
+        Quaternion normalize = this.scalarMulti(1 / this.mod());
+        return new Vector( 2 * Math.asin(normalize.i),
+                2 * Math.asin(normalize.j), 2 * Math.asin(normalize.k));
+    }
+
+    public static Quaternion fromAngleAndAxis(double angle, Vector axis) {
+        double normalize = Math.sqrt(Math.pow(axis.getX(), 2.0) + Math.pow(axis.getY(), 2.0) + Math.pow(axis.getZ(), 2.0));
+        if (axis.getX()== 0 && axis.getY()== 0 && axis.getZ()== 0) throw new NumberFormatException("Деление на ноль");
+        return new Quaternion(Math.cos(angle / 2.0),Math.sin(angle / 2.0) * axis.getX() / normalize,
+                Math.sin(angle / 2.0) * axis.getY() / normalize,Math.sin(angle / 2.0) * axis.getZ() / normalize);
     }
 }
