@@ -115,7 +115,7 @@ public class Quaternion {
     public static Quaternion fromAngleAndAxis(double angle, Vector axis) {
         double normalize = Math.sqrt(Math.pow(axis.getX(), 2.0) + Math.pow(axis.getY(), 2.0) + Math.pow(axis.getZ(), 2.0));
         if (axis.getX()== 0 && axis.getY()== 0 && axis.getZ()== 0) throw new NumberFormatException("Деление на ноль");
-        return new Quaternion(Math.cos(angle / 2.0),Math.sin(angle / 2.0) * axis.getX() / normalize,
+        return new Quaternion(Math.cos(angle / 2.0), Math.sin(angle / 2.0) * axis.getX() / normalize,
                 Math.sin(angle / 2.0) * axis.getY() / normalize,Math.sin(angle / 2.0) * axis.getZ() / normalize);
     }
 }
