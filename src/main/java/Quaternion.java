@@ -39,14 +39,10 @@ public class Quaternion {
     }
 
     //Векторная часть
-    public Quaternion vector() {
-        return new Quaternion(0, i, j, k);
-    }
+    public Vector vector() { return new Vector(i, j, k); }
 
     //Скалярная часть
-    public Quaternion scalar() {
-        return new Quaternion(s, 0, 0, 0);
-    }
+    public double scalar() { return s; }
 
     //Умножение
     public Quaternion multi(Quaternion second) {
@@ -60,14 +56,14 @@ public class Quaternion {
     //Делени
     public Quaternion division(Quaternion second) {
         double moduleInSqr = Math.pow(second.mod(), 2.0);
-        if (moduleInSqr == 0) throw new NumberFormatException("Деление на ноль");
+        if (moduleInSqr == 0) throw new IllegalArgumentException("Деление на ноль");
         return this.multi(second.inter()).scalarMulti(1 / moduleInSqr);
     }
 
 
     //Нормализация
     public Quaternion normal() {
-        if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
+        if (this.mod() == 0) throw new IllegalArgumentException("Деление на ноль");
         return new Quaternion(s, i, j, k).scalarMulti(1 / this.mod());
     }
 
@@ -110,12 +106,12 @@ public class Quaternion {
     }
 
     public double getAngle() {
-        if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
+        if (this.mod() == 0) throw new IllegalArgumentException("Деление на ноль");
         Quaternion normalize = this.scalarMulti(1 / this.mod());
         return 2 * Math.acos(normalize.s);
     }
     public Vector getAxis() {
-        if (this.mod() == 0) throw new NumberFormatException("Деление на ноль");
+        if (this.mod() == 0) throw new IllegalArgumentException("Деление на ноль");
         Quaternion normalize = this.scalarMulti(1 / this.mod());
         return new Vector( 2 * Math.asin(normalize.i),
                 2 * Math.asin(normalize.j), 2 * Math.asin(normalize.k));
@@ -123,7 +119,7 @@ public class Quaternion {
 
     public static Quaternion fromAngleAndAxis(double angle, Vector axis) {
         double normalize = Math.sqrt(Math.pow(axis.getX(), 2.0) + Math.pow(axis.getY(), 2.0) + Math.pow(axis.getZ(), 2.0));
-        if (axis.getX()== 0 && axis.getY()== 0 && axis.getZ()== 0) throw new NumberFormatException("Деление на ноль");
+        if (axis.getX()== 0 && axis.getY()== 0 && axis.getZ()== 0) throw new IllegalArgumentException("Деление на ноль");
         return new Quaternion(Math.cos(angle / 2.0), Math.sin(angle / 2.0) * axis.getX() / normalize,
                 Math.sin(angle / 2.0) * axis.getY() / normalize,Math.sin(angle / 2.0) * axis.getZ() / normalize);
     }

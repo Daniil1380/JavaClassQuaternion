@@ -47,7 +47,7 @@ public class QuaternionTest {
     @org.junit.Test
     public void vector() {
         Quaternion first = new Quaternion(1, -1, 0, 1);
-        Quaternion second = new Quaternion(0, -1, 0, 1);
+        Vector second = new Vector(-1, 0, 1);
         Assert.assertEquals(second, first.vector());
     }
 
@@ -55,8 +55,8 @@ public class QuaternionTest {
     @org.junit.Test
     public void scalar() {
         Quaternion first = new Quaternion(1, -1, 0, 1);
-        Quaternion second = new Quaternion(1, 0, 0, 0);
-        Assert.assertEquals(second, first.scalar());
+        double s = 1;
+        Assert.assertEquals(1, first.scalar(), 1e-10);
     }
 
     @org.junit.Test
@@ -92,7 +92,7 @@ public class QuaternionTest {
         Assert.assertTrue(first.multi(second).equalsRound(third, 1));
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void divisionException() {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0);
@@ -101,14 +101,14 @@ public class QuaternionTest {
 
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void normalException() {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0).scalarMulti(1 / first.mod());
         Assert.assertTrue(first.normal().equalsRound(second, 1));
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void getAngleException() {
         Quaternion first = new Quaternion(0, 0, 0, 0);
         Assert.assertEquals(0, first.getAngle(), 1e-10);
@@ -135,7 +135,7 @@ public class QuaternionTest {
 
     }
 
-    @Test(expected = NumberFormatException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void fromAngleAndAxisException() {
         Vector first = new Vector(0, 0, 0);
         Quaternion second = new Quaternion(0, 0, 0, 0);
